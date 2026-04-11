@@ -1,0 +1,1486 @@
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background:
+      radial-gradient(circle at top left, rgba(59,130,246,0.12), transparent 28%),
+      radial-gradient(circle at top right, rgba(16,185,129,0.10), transparent 24%),
+      linear-gradient(180deg, #0f172a 0%, #111827 100%);
+    color: #e5e7eb;
+    min-height: 100vh;
+  }
+  .shell {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px 20px 48px;
+  }
+  .hero {
+    background: linear-gradient(135deg, rgba(30,41,59,0.95), rgba(17,24,39,0.95));
+    border: 1px solid rgba(148,163,184,0.18);
+    border-radius: 28px;
+    padding: 28px;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.35);
+    margin-bottom: 24px;
+  }
+  .hero-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #93c5fd;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 4vw, 42px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: #f8fafc;
+    margin-bottom: 10px;
+  }
+  .hero p {
+    max-width: 700px;
+    color: #cbd5e1;
+    font-size: 15px;
+    line-height: 1.65;
+  }
+  .hero-badge {
+    padding: 12px 14px;
+    border-radius: 18px;
+    background: rgba(15,23,42,0.8);
+    border: 1px solid rgba(148,163,184,0.16);
+    min-width: 180px;
+  }
+  .hero-badge-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.10em;
+    color: #94a3b8;
+    margin-bottom: 6px;
+  }
+  .hero-badge-value {
+    font-size: 22px;
+    font-weight: 700;
+    color: #f8fafc;
+  }
+  .tabs {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 22px;
+  }
+  .tab {
+    border: 1px solid rgba(148,163,184,0.14);
+    background: rgba(15,23,42,0.7);
+    color: #cbd5e1;
+    padding: 14px 16px;
+    border-radius: 16px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+  }
+  .tab:hover {
+    transform: translateY(-1px);
+    border-color: rgba(96,165,250,0.35);
+  }
+  .tab.active {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 14px 30px rgba(37,99,235,0.35);
+  }
+  .section { display: none; }
+  .section.active { display: block; }
+  .panel {
+    background: rgba(15,23,42,0.78);
+    border: 1px solid rgba(148,163,184,0.14);
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.22);
+  }
+  .panel-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 22px;
+  }
+  .card {
+    background: rgba(15,23,42,0.55);
+    border: 1px solid rgba(148,163,184,0.12);
+    border-radius: 20px;
+    padding: 20px;
+  }
+  .card-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #f8fafc;
+    margin-bottom: 6px;
+  }
+  .card-sub {
+    font-size: 13px;
+    color: #94a3b8;
+    margin-bottom: 18px;
+    line-height: 1.5;
+  }
+  .field { margin-bottom: 16px; }
+  label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #93c5fd;
+    margin-bottom: 8px;
+  }
+  input[type=number], select {
+    width: 100%;
+    padding: 13px 14px;
+    border-radius: 14px;
+    border: 1px solid rgba(148,163,184,0.16);
+    background: rgba(2,6,23,0.75);
+    color: #f8fafc;
+    font-size: 15px;
+    outline: none;
+    transition: 0.18s ease;
+  }
+  input[type=number]:focus, select:focus {
+    border-color: rgba(96,165,250,0.7);
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.18);
+  }
+  .row2, .row3 {
+    display: grid;
+    gap: 14px;
+  }
+  .row2 { grid-template-columns: 1fr 1fr; }
+  .row3 { grid-template-columns: repeat(3, 1fr); }
+  .section-head {
+    font-size: 13px;
+    font-weight: 700;
+    color: #f8fafc;
+    margin: 6px 0 12px;
+  }
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(148,163,184,0.22), transparent);
+    border: none;
+    margin: 18px 0;
+  }
+  .addon-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .addon-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(2,6,23,0.55);
+    border: 1px solid rgba(148,163,184,0.10);
+    border-radius: 16px;
+    padding: 12px;
+    font-size: 13px;
+    color: #e2e8f0;
+    line-height: 1.35;
+  }
+  .addon-item input[type=checkbox] {
+    width: 16px;
+    height: 16px;
+    accent-color: #2563eb;
+    flex-shrink: 0;
+  }
+  .qty {
+    width: 64px !important;
+    padding: 8px 8px !important;
+    font-size: 13px !important;
+    border-radius: 10px !important;
+  }
+  .results-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .result-box {
+    background: linear-gradient(180deg, rgba(30,41,59,0.95), rgba(15,23,42,0.92));
+    border: 1px solid rgba(96,165,250,0.18);
+    border-radius: 22px;
+    padding: 22px;
+  }
+  .result-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #93c5fd;
+    margin-bottom: 8px;
+  }
+  .result-price {
+    font-size: clamp(34px, 5vw, 48px);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+  }
+  .result-sub {
+    font-size: 14px;
+    color: #cbd5e1;
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+  .breakdown {
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(148,163,184,0.14);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .brow {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 13px;
+    color: #cbd5e1;
+  }
+  .brow span:last-child {
+    color: #f8fafc;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .warn {
+    font-size: 13px;
+    line-height: 1.5;
+    color: #fbbf24;
+    background: rgba(120,53,15,0.22);
+    border: 1px solid rgba(251,191,36,0.18);
+    border-radius: 16px;
+    padding: 12px 14px;
+  }
+  .mat-box {
+    background: rgba(15,23,42,0.72);
+    border: 1px solid rgba(148,163,184,0.12);
+    border-radius: 20px;
+    padding: 20px;
+  }
+  .mat-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #f8fafc;
+    margin-bottom: 5px;
+  }
+  .mat-sub {
+    font-size: 13px;
+    color: #94a3b8;
+    margin-bottom: 14px;
+  }
+  .mat-row, .mat-total {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 13px;
+    padding: 9px 0;
+  }
+  .mat-row {
+    border-bottom: 1px solid rgba(148,163,184,0.10);
+    color: #cbd5e1;
+  }
+  .mat-row span:last-child, .mat-total span:last-child {
+    color: #f8fafc;
+    font-weight: 700;
+  }
+  .mat-total {
+    padding-top: 12px;
+    margin-top: 6px;
+    border-top: 1px solid rgba(148,163,184,0.16);
+    color: #f8fafc;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .rec-box {
+    margin-top: 16px;
+    padding: 14px 16px;
+    border-radius: 16px;
+    border-left: 4px solid;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .rec-cover {
+    border-color: #22c55e;
+    background: rgba(20,83,45,0.22);
+    color: #bbf7d0;
+  }
+  .rec-add {
+    border-color: #f59e0b;
+    background: rgba(120,53,15,0.22);
+    color: #fde68a;
+  }
+  .rec-label {
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .mini-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .mini-stat {
+    background: rgba(2,6,23,0.55);
+    border: 1px solid rgba(148,163,184,0.10);
+    border-radius: 16px;
+    padding: 14px;
+  }
+  .mini-stat-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #94a3b8;
+    margin-bottom: 8px;
+  }
+  .mini-stat-value {
+    font-size: 22px;
+    font-weight: 700;
+    color: #f8fafc;
+  }
+  .labor-box {
+    background: linear-gradient(135deg, rgba(16,24,10,0.85), rgba(10,20,15,0.90));
+    border: 1px solid rgba(34,197,94,0.22);
+    border-radius: 22px;
+    padding: 22px;
+  }
+  .labor-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.10em; color: #86efac; margin-bottom: 14px; }
+  .labor-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  .labor-refresh { background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.35); color: #86efac; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 6px 12px; border-radius: 10px; cursor: pointer; transition: 0.15s; }
+  .labor-refresh:hover { background: rgba(34,197,94,0.28); }
+  .labor-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(148,163,184,0.10); font-size: 13px; gap: 12px; }
+  .labor-row:last-child { border-bottom: none; }
+  .labor-row span:first-child { color: #94a3b8; }
+  .labor-row span:last-child { color: #f8fafc; font-weight: 700; }
+  .labor-profit { margin-top: 14px; padding: 14px 16px; border-radius: 16px; background: rgba(20,83,45,0.30); border: 1px solid rgba(34,197,94,0.20); }
+  .labor-profit-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.10em; color: #86efac; margin-bottom: 6px; font-weight: 700; }
+  .labor-profit-value { font-size: 28px; font-weight: 800; color: #4ade80; letter-spacing: -0.03em; }
+  .labor-profit-sub { font-size: 12px; color: #86efac; margin-top: 4px; }
+  .labor-input-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+  .labor-input-row label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #93c5fd; margin: 0; white-space: nowrap; }
+  .labor-input-row input, .labor-input-row select { width: auto; flex: 1; min-width: 80px; padding: 8px 10px; font-size: 14px; }
+  @media (max-width: 900px) {
+    .panel-grid, .row3 { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 720px) {
+    .tabs, .addon-grid, .row2, .mini-stats { grid-template-columns: 1fr; }
+    .shell { padding: 18px 14px 32px; }
+    .hero, .panel, .card { padding: 18px; }
+  }
+</style>
+
+<div class="shell">
+  <div class="hero">
+    <div class="hero-top">
+      <div>
+        <div class="eyebrow">Turbo Sweep • pricing workspace</div>
+        <h1>Janitorial Pricing Calculator</h1>
+        <p>Clean, faster quoting for recurring service, one-time cleans, and window jobs. Enter square footage, pick the service type, and get an instant price breakdown.</p>
+      </div>
+      <div class="hero-badge">
+        <div class="hero-badge-label">Built for</div>
+        <div class="hero-badge-value">Fast quotes</div>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('commercial',this)">Commercial Janitorial</button>
+      <button class="tab" onclick="switchTab('residential',this)">Residential Reoccurring Cleaning</button>
+      <button class="tab" onclick="switchTab('onetime',this)">One-time cleanings</button>
+      <button class="tab" onclick="switchTab('windows',this)">Windows</button>
+    </div>
+  </div>
+
+  <div class="section active" id="sec-commercial">
+    <div class="panel panel-grid">
+      <div class="card">
+        <div class="card-title">Commercial Janitorial</div>
+        <div class="card-sub">Monthly contract pricing based on square footage, cleaning frequency, and facility type.</div>
+
+        <div class="row2">
+          <div class="field">
+            <label>Square footage</label>
+            <input type="number" id="c-sqft" placeholder="e.g. 5000" oninput="calcC()" />
+          </div>
+          <div class="field">
+            <label>Frequency</label>
+            <select id="c-freq" onchange="resetLabor('c'); calcC();">
+              <option value="">Select frequency</option>
+              <option value="0.19">5 days / week</option>
+              <option value="0.15">4 days / week</option>
+              <option value="0.11">3 days / week</option>
+              <option value="0.075">2 days / week</option>
+              <option value="0.048">1 day / week</option>
+              <option value="0.027">Bi-weekly</option>
+              <option value="0.013">Monthly</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Facility type</label>
+          <select id="c-type" onchange="calcC()">
+            <option value="0">Standard office</option>
+            <option value="0.08">Medical / dental / clinic</option>
+            <option value="0.03">Retail / showroom</option>
+            <option value="0.11">Restaurant / food service</option>
+            <option value="-0.03">Warehouse / industrial</option>
+            <option value="0.06">School / daycare</option>
+            <option value="0.07">Gym / fitness center</option>
+          </select>
+        </div>
+
+        <hr class="divider" />
+        <div class="section-head">Add-ons</div>
+        <div class="addon-grid">
+          <label class="addon-item"><input type="checkbox" id="a-restroom" onchange="calcC()" /> Full restrooms <input type="number" class="qty" id="a-restroom-n" value="1" min="1" max="20" oninput="calcC()" /> × $15/mo</label>
+          <label class="addon-item"><input type="checkbox" id="a-halfbath" onchange="calcC()" /> Half baths <input type="number" class="qty" id="a-halfbath-n" value="1" min="1" max="20" oninput="calcC()" /> × $8/mo</label>
+          <label class="addon-item"><input type="checkbox" id="a-breakroom" onchange="calcC()" /> Break rooms <input type="number" class="qty" id="a-breakroom-n" value="1" min="1" max="10" oninput="calcC()" /> × $20/mo</label>
+          <label class="addon-item"><input type="checkbox" id="a-kitchen" onchange="calcC()" /> Commercial kitchen × $60/mo</label>
+          <label class="addon-item"><input type="checkbox" id="a-wax" onchange="calcC()" /> Floor strip & wax (one-time)</label>
+          <label class="addon-item"><input type="checkbox" id="a-carpet" onchange="calcC()" /> Carpet extraction (one-time)</label>
+        </div>
+      </div>
+
+      <div class="results-stack">
+        <div class="result-box" id="c-result" style="display:none;">
+          <div class="result-label">Estimated monthly price</div>
+          <div class="result-price" id="c-price"></div>
+          <div class="result-sub" id="c-sub"></div>
+          <div class="breakdown" id="c-breakdown"></div>
+        </div>
+        <div class="warn" id="c-warn" style="display:none;">Per-visit rate is below your $100 minimum. Consider raising the monthly quote.</div>
+        <div class="mat-box" id="c-mat" style="display:none;">
+          <div class="mat-title">Materials overview</div>
+          <div class="mat-sub">Chemicals and liners under a standard recurring contract.</div>
+          <div id="c-mat-rows"></div>
+          <div class="mat-total"><span>Estimated total materials</span><span id="c-mat-total"></span></div>
+          <div class="rec-box" id="c-rec"></div>
+        </div>
+        <div class="labor-box" id="c-labor" style="display:none;">
+          <div class="labor-header">
+            <div class="labor-title">Pay Breakdown</div>
+            <button class="labor-refresh" onclick="resetLabor('c'); calcC();">↺ Refresh</button>
+          </div>
+          <div style="font-size:11px;color:#60a5fa;font-style:italic;margin-bottom:12px;" id="c-labor-suggest"></div>
+
+          <div class="labor-input-row">
+            <label>Hourly wage $</label>
+            <input type="number" id="c-wage" value="20.00" min="10" max="60" step="0.50" oninput="markEdited('c-wage'); calcLabor_c()" />
+            <label>Hours / day</label>
+            <input type="number" id="c-hours" value="2" min="0.5" max="20" step="0.5" oninput="markEdited('c-hours'); calcLabor_c()" />
+          </div>
+
+          <div style="margin:14px 0 6px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:#94a3b8;">Cost breakdown</div>
+
+          <div class="labor-row" style="font-weight:600;color:#f8fafc;">
+            <span>Labor cost <span style="font-size:11px;font-weight:400;color:#64748b;" id="c-labor-calc-note"></span></span>
+            <span id="c-labor-gross"></span>
+          </div>
+          <div class="labor-row" style="padding-left:16px;">
+            <span style="color:#64748b;">Payroll burden (+20%)</span>
+            <span id="c-labor-burden"></span>
+          </div>
+          <div class="labor-row" style="font-weight:600;border-top:1px solid rgba(148,163,184,0.18);margin-top:4px;padding-top:10px;">
+            <span>Total labor cost</span>
+            <span id="c-labor-total" style="color:#f87171;"></span>
+          </div>
+          <div class="labor-row">
+            <span>Materials cost <span style="font-size:10px;color:#475569;">(editable)</span></span>
+            <input type="number" id="c-labor-matcost-input"
+              step="1" min="0"
+              style="width:100px;padding:5px 8px;border-radius:8px;border:1px solid rgba(96,165,250,0.4);background:rgba(2,6,23,0.8);color:#f87171;font-size:14px;font-weight:700;text-align:right;"
+              oninput="overrideMat('c')" />
+          </div>
+          <div class="labor-row" style="font-weight:600;">
+            <span>Total costs</span>
+            <span id="c-labor-allcosts" style="color:#f87171;"></span>
+          </div>
+          <div class="labor-row" style="font-weight:700;border-top:1px solid rgba(148,163,184,0.18);margin-top:4px;padding-top:10px;">
+            <span>Revenue (monthly)</span>
+            <span id="c-labor-rev" style="color:#60a5fa;"></span>
+          </div>
+
+          <div class="labor-profit">
+            <div class="labor-profit-label">Your take home (after labor + materials)</div>
+            <div class="labor-profit-value" id="c-labor-profit"></div>
+            <div class="labor-profit-sub" id="c-labor-margin"></div>
+          </div>
+
+          <div style="margin-top:16px;padding:14px 16px;background:rgba(2,6,23,0.55);border:1px solid rgba(148,163,184,0.14);border-radius:16px;">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#93c5fd;margin-bottom:8px;">Adjust your target take home</div>
+            <div style="display:flex;align-items:center;gap:10px;">
+              <span style="font-size:13px;color:#94a3b8;">I want to keep $</span>
+              <input type="number" id="c-target" placeholder="e.g. 1200" min="0" step="10"
+                style="flex:1;padding:10px 12px;border-radius:12px;border:1px solid rgba(96,165,250,0.4);background:rgba(2,6,23,0.8);color:#f8fafc;font-size:15px;font-weight:700;"
+                oninput="calcFromTarget('c')" />
+              <span style="font-size:12px;color:#64748b;">monthly</span>
+            </div>
+            <div style="font-size:11px;color:#60a5fa;margin-top:8px;font-style:italic;" id="c-target-note"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="sec-residential">
+    <div class="panel panel-grid">
+      <div class="card">
+        <div class="card-title">Residential Reoccurring Cleaning</div>
+        <div class="card-sub">Use this for repeat home cleanings with preset home sizes and per-visit add-ons.</div>
+
+        <div class="row2">
+          <div class="field">
+            <label>Home size</label>
+            <select id="r-size" onchange="calcR()">
+              <option value="">Select home size</option>
+              <option value="130">Studio / 1BR ($110–$150)</option>
+              <option value="165">Small 2BR/1BA ($140–$190)</option>
+              <option value="207">Medium 3BR/2BA ($175–$240)</option>
+              <option value="260">Large 4BR/2.5BA ($220–$300)</option>
+              <option value="340">Extra large 5BR+ ($280–$400)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Frequency</label>
+            <select id="r-freq" onchange="calcR()">
+              <option value="">Select frequency</option>
+              <option value="1.75">First-time / initial clean</option>
+              <option value="1.35">One-time return client</option>
+              <option value="1.0">Monthly</option>
+              <option value="0.90">Bi-weekly</option>
+              <option value="0.80">Weekly</option>
+              <option value="2.5">Move-in / move-out</option>
+            </select>
+          </div>
+        </div>
+
+        <hr class="divider" />
+        <div class="section-head">Add-ons</div>
+        <div class="addon-grid">
+          <label class="addon-item"><input type="checkbox" id="r-extrabr" onchange="calcR()" /> Extra bedrooms <input type="number" class="qty" id="r-extrabr-n" value="1" min="1" max="6" oninput="calcR()" /> × $35</label>
+          <label class="addon-item"><input type="checkbox" id="r-fullba" onchange="calcR()" /> Extra full baths <input type="number" class="qty" id="r-fullba-n" value="1" min="1" max="6" oninput="calcR()" /> × $40</label>
+          <label class="addon-item"><input type="checkbox" id="r-halfba" onchange="calcR()" /> Half bath × $21</label>
+          <label class="addon-item"><input type="checkbox" id="r-basement" onchange="calcR()" /> Finished basement × $60</label>
+          <label class="addon-item"><input type="checkbox" id="r-fridge" onchange="calcR()" /> Inside refrigerator × $50</label>
+          <label class="addon-item"><input type="checkbox" id="r-oven" onchange="calcR()" /> Inside oven × $47</label>
+          <label class="addon-item"><input type="checkbox" id="r-cabinets" onchange="calcR()" /> Inside cabinets × $75</label>
+          <label class="addon-item"><input type="checkbox" id="r-garage" onchange="calcR()" /> Garage sweep × $40</label>
+          <label class="addon-item"><input type="checkbox" id="r-pets" onchange="calcR()" /> Pets surcharge × $27</label>
+          <label class="addon-item"><input type="checkbox" id="r-dirty" onchange="calcR()" /> Heavily soiled (+50%)</label>
+        </div>
+      </div>
+
+      <div class="results-stack">
+        <div class="result-box" id="r-result" style="display:none;">
+          <div class="result-label">Estimated per-visit price</div>
+          <div class="result-price" id="r-price"></div>
+          <div class="result-sub">per visit</div>
+          <div class="breakdown" id="r-breakdown"></div>
+        </div>
+        <div class="warn" id="r-warn" style="display:none;">This is below your $100 minimum. Apply your minimum visit fee.</div>
+        <div class="mat-box" id="r-mat" style="display:none;">
+          <div class="mat-title">Materials overview</div>
+          <div class="mat-sub">Estimated chemicals and liners per visit.</div>
+          <div id="r-mat-rows"></div>
+          <div class="mat-total"><span>Estimated total materials</span><span id="r-mat-total"></span></div>
+          <div class="rec-box" id="r-rec"></div>
+        </div>
+        <div class="labor-box" id="r-labor" style="display:none;">
+          <div class="labor-header">
+            <div class="labor-title">Pay Breakdown</div>
+            <button class="labor-refresh" onclick="resetLabor('r'); calcR();">↺ Refresh</button>
+          </div>
+          <div style="font-size:11px;color:#60a5fa;font-style:italic;margin-bottom:12px;" id="r-labor-suggest"></div>
+
+          <div class="labor-input-row">
+            <label>Hourly wage $</label>
+            <input type="number" id="r-wage" value="20.00" min="10" max="60" step="0.50" oninput="markEdited('r-wage'); calcLabor_r()" />
+            <label>Hours / day</label>
+            <input type="number" id="r-hours" value="2" min="0.5" max="20" step="0.5" oninput="markEdited('r-hours'); calcLabor_r()" />
+          </div>
+
+          <div style="margin:14px 0 6px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:#94a3b8;">Cost breakdown</div>
+
+          <div class="labor-row" style="font-weight:600;color:#f8fafc;">
+            <span>Labor cost <span style="font-size:11px;font-weight:400;color:#64748b;" id="r-labor-calc-note"></span></span>
+            <span id="r-labor-gross"></span>
+          </div>
+          <div class="labor-row" style="padding-left:16px;">
+            <span style="color:#64748b;">Payroll burden (+20%)</span>
+            <span id="r-labor-burden"></span>
+          </div>
+          <div class="labor-row" style="font-weight:600;border-top:1px solid rgba(148,163,184,0.18);margin-top:4px;padding-top:10px;">
+            <span>Total labor cost</span>
+            <span id="r-labor-total" style="color:#f87171;"></span>
+          </div>
+          <div class="labor-row">
+            <span>Materials cost <span style="font-size:10px;color:#475569;">(editable)</span></span>
+            <input type="number" id="r-labor-matcost-input"
+              step="1" min="0"
+              style="width:100px;padding:5px 8px;border-radius:8px;border:1px solid rgba(96,165,250,0.4);background:rgba(2,6,23,0.8);color:#f87171;font-size:14px;font-weight:700;text-align:right;"
+              oninput="overrideMat('r')" />
+          </div>
+          <div class="labor-row" style="font-weight:600;">
+            <span>Total costs</span>
+            <span id="r-labor-allcosts" style="color:#f87171;"></span>
+          </div>
+          <div class="labor-row" style="font-weight:700;border-top:1px solid rgba(148,163,184,0.18);margin-top:4px;padding-top:10px;">
+            <span>Revenue (per visit)</span>
+            <span id="r-labor-rev" style="color:#60a5fa;"></span>
+          </div>
+
+          <div class="labor-profit">
+            <div class="labor-profit-label">Your take home (after labor + materials)</div>
+            <div class="labor-profit-value" id="r-labor-profit"></div>
+            <div class="labor-profit-sub" id="r-labor-margin"></div>
+          </div>
+
+          <div style="margin-top:16px;padding:14px 16px;background:rgba(2,6,23,0.55);border:1px solid rgba(148,163,184,0.14);border-radius:16px;">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#93c5fd;margin-bottom:8px;">Adjust your target take home</div>
+            <div style="display:flex;align-items:center;gap:10px;">
+              <span style="font-size:13px;color:#94a3b8;">I want to keep $</span>
+              <input type="number" id="r-target" placeholder="e.g. 1200" min="0" step="10"
+                style="flex:1;padding:10px 12px;border-radius:12px;border:1px solid rgba(96,165,250,0.4);background:rgba(2,6,23,0.8);color:#f8fafc;font-size:15px;font-weight:700;"
+                oninput="calcFromTarget('r')" />
+              <span style="font-size:12px;color:#64748b;">per visit</span>
+            </div>
+            <div style="font-size:11px;color:#60a5fa;margin-top:8px;font-style:italic;" id="r-target-note"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="sec-onetime">
+    <div class="panel panel-grid">
+      <div class="card">
+        <div class="card-title">One-time cleaning quote</div>
+        <div class="card-sub">Square footage based. Select property type, enter sq ft, condition, and any add-ons including windows.</div>
+
+        <div class="row3">
+          <div class="field">
+            <label>Property type</label>
+            <select id="ot-type" onchange="calcOT()">
+              <option value="">Select type</option>
+              <option value="office">Office / commercial</option>
+              <option value="home">Home / residential</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Square footage</label>
+            <input type="number" id="ot-sqft" placeholder="e.g. 2200" oninput="calcOT()" />
+          </div>
+          <div class="field">
+            <label>Condition</label>
+            <select id="ot-condition" onchange="calcOT()">
+              <option value="1">Standard</option>
+              <option value="1.2">Moderate buildup (+20%)</option>
+              <option value="1.45">Heavy buildup (+45%)</option>
+              <option value="1.7">Move-out / deep clean (+70%)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row2">
+          <div class="field">
+            <label>Base rate (per sq ft)</label>
+            <select id="ot-rate" onchange="calcOT()">
+              <option value="">Select a rate</option>
+              <optgroup label="Office / Commercial">
+                <option value="0.16">Light duty — $0.16 / sq ft</option>
+                <option value="0.22">Standard — $0.22 / sq ft</option>
+                <option value="0.30">Heavy use — $0.30 / sq ft</option>
+                <option value="0.40">Post-construction — $0.40 / sq ft</option>
+              </optgroup>
+              <optgroup label="Home / Residential">
+                <option value="0.14">Light — $0.14 / sq ft</option>
+                <option value="0.18">Standard — $0.18 / sq ft</option>
+                <option value="0.24">Deep clean — $0.24 / sq ft</option>
+                <option value="0.35">Move-in/out — $0.35 / sq ft</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="field">
+            <label>Restrooms / bathrooms</label>
+            <input type="number" id="ot-baths" value="0" min="0" oninput="calcOT()" />
+          </div>
+        </div>
+
+        <hr class="divider" />
+        <div class="section-head">Cleaning add-ons</div>
+        <div class="addon-grid">
+          <label class="addon-item"><input type="checkbox" id="ot-inside-fridge" onchange="calcOT()" /> Inside refrigerator × $50</label>
+          <label class="addon-item"><input type="checkbox" id="ot-inside-oven" onchange="calcOT()" /> Inside oven × $47</label>
+          <label class="addon-item"><input type="checkbox" id="ot-cabinets" onchange="calcOT()" /> Inside cabinets × $75</label>
+          <label class="addon-item"><input type="checkbox" id="ot-baseboards" onchange="calcOT()" /> Detailed baseboards × $65</label>
+          <label class="addon-item"><input type="checkbox" id="ot-floor-detail" onchange="calcOT()" /> Floor detail / scrub × $120</label>
+          <label class="addon-item"><input type="checkbox" id="ot-carpet" onchange="calcOT()" /> Carpet extraction (per sq ft)</label>
+        </div>
+
+        <hr class="divider" />
+        <div class="section-head">Windows (optional — include in this quote)</div>
+        <div class="row2">
+          <div class="field">
+            <label>Number of panes</label>
+            <input type="number" id="ot-panes" placeholder="0" min="0" value="0" oninput="calcOT()" />
+          </div>
+          <div class="field">
+            <label>Rate per pane</label>
+            <select id="ot-pane-rate" onchange="calcOT()">
+              <option value="0">No windows</option>
+              <option value="5">$5 / pane (residential low)</option>
+              <option value="6.50">$6.50 / pane (residential mid)</option>
+              <option value="8">$8 / pane (residential high)</option>
+              <option value="12">$12 / pane (commercial low)</option>
+              <option value="16">$16 / pane (commercial mid)</option>
+              <option value="20">$20 / pane (commercial high)</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label>Window sides</label>
+          <select id="ot-sides" onchange="calcOT()">
+            <option value="1.0">Interior + exterior (full price)</option>
+            <option value="0.65">Exterior only (65%)</option>
+            <option value="0.40">Interior only (40%)</option>
+          </select>
+        </div>
+        <div class="addon-grid">
+          <label class="addon-item"><input type="checkbox" id="ot-w-2fl" onchange="calcOT()" /> 2nd floor windows <input type="number" class="qty" id="ot-w-2fl-n" value="4" min="1" oninput="calcOT()" /> × $4</label>
+          <label class="addon-item"><input type="checkbox" id="ot-w-3fl" onchange="calcOT()" /> 3rd floor+ <input type="number" class="qty" id="ot-w-3fl-n" value="2" min="1" oninput="calcOT()" /> × $7</label>
+          <label class="addon-item"><input type="checkbox" id="ot-w-screens" onchange="calcOT()" /> Screens <input type="number" class="qty" id="ot-w-screens-n" value="4" min="1" oninput="calcOT()" /> × $4</label>
+          <label class="addon-item"><input type="checkbox" id="ot-w-tracks" onchange="calcOT()" /> Tracks/sills <input type="number" class="qty" id="ot-w-tracks-n" value="4" min="1" oninput="calcOT()" /> × $6</label>
+          <label class="addon-item"><input type="checkbox" id="ot-w-hardwater" onchange="calcOT()" /> Hard water stains (+75%)</label>
+          <label class="addon-item"><input type="checkbox" id="ot-w-postconstruct" onchange="calcOT()" /> Post-construction (+100%)</label>
+        </div>
+      </div>
+
+      <div class="results-stack">
+        <div class="result-box" id="ot-result" style="display:none;">
+          <div class="result-label">Estimated one-time quote</div>
+          <div class="result-price" id="ot-price"></div>
+          <div class="result-sub" id="ot-sub"></div>
+          <div class="breakdown" id="ot-breakdown"></div>
+        </div>
+        <div class="warn" id="ot-warn" style="display:none;">This quote is under $150. Consider a minimum dispatch fee.</div>
+        <div class="mini-stats" id="ot-stats" style="display:none;">
+          <div class="mini-stat">
+            <div class="mini-stat-label">Est. materials</div>
+            <div class="mini-stat-value" id="ot-materials"></div>
+          </div>
+          <div class="mini-stat">
+            <div class="mini-stat-label">Effective rate</div>
+            <div class="mini-stat-value" id="ot-eff-rate"></div>
+          </div>
+          <div class="mini-stat">
+            <div class="mini-stat-label">Cleaning subtotal</div>
+            <div class="mini-stat-value" id="ot-clean-sub"></div>
+          </div>
+          <div class="mini-stat">
+            <div class="mini-stat-label">Window subtotal</div>
+            <div class="mini-stat-value" id="ot-win-sub"></div>
+          </div>
+        </div>
+        <div class="labor-box" id="ot-labor" style="display:none;">
+          <div class="labor-header">
+            <div class="labor-title">Pay Breakdown</div>
+            <button class="labor-refresh" onclick="resetLabor('ot'); calcOT();">↺ Refresh</button>
+          </div>
+          <div style="font-size:11px;color:#60a5fa;font-style:italic;margin-bottom:12px;" id="ot-labor-suggest"></div>
+
+          <div class="labor-input-row">
+            <label>Hourly wage $</label>
+            <input type="number" id="ot-wage" value="20.00" min="10" max="60" step="0.50" oninput="markEdited('ot-wage'); calcLabor_ot()" />
+            <label>Hours / day</label>
+            <input type="number" id="ot-hours" value="2" min="0.5" max="20" step="0.5" oninput="markEdited('ot-hours'); calcLabor_ot()" />
+          </div>
+
+          <div style="margin:14px 0 6px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:#94a3b8;">Cost breakdown</div>
+
+          <div class="labor-row" style="font-weight:600;color:#f8fafc;">
+            <span>Labor cost <span style="font-size:11px;font-weight:400;color:#64748b;" id="ot-labor-calc-note"></span></span>
+            <span id="ot-labor-gross"></span>
+          </div>
+          <div class="labor-row" style="padding-left:16px;">
+            <span style="color:#64748b;">Payroll burden (+20%)</span>
+            <span id="ot-labor-burden"></span>
+          </div>
+          <div class="labor-row" style="font-weight:600;border-top:1px solid rgba(148,163,184,0.18);margin-top:4px;padding-top:10px;">
+            <span>Total labor cost</span>
+            <span id="ot-labor-total" style="color:#f87171;"></span>
+          </div>
+          <div class="labor-row">
+            <span>Materials cost <span style="font-size:10px;color:#475569;">(editable)</span></span>
+            <input type="number" id="ot-labor-matcost-input"
+              step="1" min="0"
+              style="width:100px;padding:5px 8px;border-radius:8px;border:1px solid rgba(96,165,250,0.4);background:rgba(2,6,23,0.8);color:#f87171;font-size:14px;font-weight:700;text-align:right;"
+              oninput="overrideMat('ot')" />
+          </div>
+          <div class="labor-row" style="font-weight:600;">
+            <span>Total costs</span>
+            <span id="ot-labor-allcosts" style="color:#f87171;"></span>
+          </div>
+          <div class="labor-row" style="font-weight:700;border-top:1px solid rgba(148,163,184,0.18);margin-top:4px;padding-top:10px;">
+            <span>Revenue (this job)</span>
+            <span id="ot-labor-rev" style="color:#60a5fa;"></span>
+          </div>
+
+          <div class="labor-profit">
+            <div class="labor-profit-label">Your take home (after labor + materials)</div>
+            <div class="labor-profit-value" id="ot-labor-profit"></div>
+            <div class="labor-profit-sub" id="ot-labor-margin"></div>
+          </div>
+
+          <div style="margin-top:16px;padding:14px 16px;background:rgba(2,6,23,0.55);border:1px solid rgba(148,163,184,0.14);border-radius:16px;">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#93c5fd;margin-bottom:8px;">Adjust your target take home</div>
+            <div style="display:flex;align-items:center;gap:10px;">
+              <span style="font-size:13px;color:#94a3b8;">I want to keep $</span>
+              <input type="number" id="ot-target" placeholder="e.g. 1200" min="0" step="10"
+                style="flex:1;padding:10px 12px;border-radius:12px;border:1px solid rgba(96,165,250,0.4);background:rgba(2,6,23,0.8);color:#f8fafc;font-size:15px;font-weight:700;"
+                oninput="calcFromTarget('ot')" />
+              <span style="font-size:12px;color:#64748b;">this job</span>
+            </div>
+            <div style="font-size:11px;color:#60a5fa;margin-top:8px;font-style:italic;" id="ot-target-note"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="sec-windows">
+    <div class="panel panel-grid">
+      <div class="card">
+        <div class="card-title">Window cleaning</div>
+        <div class="card-sub">Residential and commercial pane-based pricing with side, floor, and stain adjustments.</div>
+
+        <div class="field">
+          <label>Job type</label>
+          <select id="w-type" onchange="toggleW()">
+            <option value="res">Residential</option>
+            <option value="com">Commercial</option>
+          </select>
+        </div>
+
+        <div id="w-res">
+          <div class="row2">
+            <div class="field">
+              <label>Number of panes</label>
+              <input type="number" id="w-panes" placeholder="e.g. 22" oninput="calcW()" />
+            </div>
+            <div class="field">
+              <label>Rate per pane</label>
+              <select id="w-panerate" onchange="calcW()">
+                <option value="5">$5 / pane (low)</option>
+                <option value="6.50" selected>$6.50 / pane (mid)</option>
+                <option value="8">$8 / pane (high)</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label>Sides</label>
+            <select id="w-sides" onchange="calcW()">
+              <option value="1.0">Interior + exterior</option>
+              <option value="0.65">Exterior only</option>
+              <option value="0.40">Interior only</option>
+            </select>
+          </div>
+          <hr class="divider" />
+          <div class="section-head">Surcharges</div>
+          <div class="addon-grid">
+            <label class="addon-item"><input type="checkbox" id="w-2fl" onchange="calcW()" /> 2nd floor <input type="number" class="qty" id="w-2fl-n" value="4" min="1" oninput="calcW()" /> × $4</label>
+            <label class="addon-item"><input type="checkbox" id="w-3fl" onchange="calcW()" /> 3rd floor+ <input type="number" class="qty" id="w-3fl-n" value="2" min="1" oninput="calcW()" /> × $7</label>
+            <label class="addon-item"><input type="checkbox" id="w-screens" onchange="calcW()" /> Screens <input type="number" class="qty" id="w-screens-n" value="4" min="1" oninput="calcW()" /> × $4</label>
+            <label class="addon-item"><input type="checkbox" id="w-tracks" onchange="calcW()" /> Tracks/sills <input type="number" class="qty" id="w-tracks-n" value="4" min="1" oninput="calcW()" /> × $6</label>
+            <label class="addon-item"><input type="checkbox" id="w-skylights" onchange="calcW()" /> Skylights <input type="number" class="qty" id="w-skylights-n" value="1" min="1" oninput="calcW()" /> × $29</label>
+            <label class="addon-item"><input type="checkbox" id="w-doors" onchange="calcW()" /> Doors <input type="number" class="qty" id="w-doors-n" value="1" min="1" oninput="calcW()" /> × $17</label>
+            <label class="addon-item"><input type="checkbox" id="w-hardwater" onchange="calcW()" /> Hard water stains (+75%)</label>
+            <label class="addon-item"><input type="checkbox" id="w-postconstruct" onchange="calcW()" /> Post-construction (+100%)</label>
+          </div>
+        </div>
+
+        <div id="w-com" style="display:none;">
+          <div class="row2">
+            <div class="field">
+              <label>Number of panes</label>
+              <input type="number" id="wc-panes" placeholder="e.g. 60" oninput="calcWC()" />
+            </div>
+            <div class="field">
+              <label>Rate per pane</label>
+              <select id="wc-panerate" onchange="calcWC()">
+                <option value="8">$8 / pane (low)</option>
+                <option value="14" selected>$14 / pane (mid)</option>
+                <option value="20">$20 / pane (high)</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label>Extra floors above ground</label>
+            <select id="wc-floors" onchange="calcWC()">
+              <option value="0">Ground floor only</option>
+              <option value="0.15">+1 floor (+15%)</option>
+              <option value="0.30">+2 floors (+30%)</option>
+              <option value="0.50">+3 floors (+50%)</option>
+            </select>
+          </div>
+          <div class="addon-grid">
+            <label class="addon-item"><input type="checkbox" id="wc-hardwater" onchange="calcWC()" /> Hard water (+60%)</label>
+            <label class="addon-item"><input type="checkbox" id="wc-postconstruct" onchange="calcWC()" /> Post-construction (+100%)</label>
+            <label class="addon-item"><input type="checkbox" id="wc-interior" onchange="calcWC()" /> Interior side (+38%)</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="results-stack">
+        <div class="result-box" id="w-result" style="display:none;">
+          <div class="result-label">Estimated job price</div>
+          <div class="result-price" id="w-price"></div>
+          <div class="result-sub">total job price</div>
+          <div class="breakdown" id="w-breakdown"></div>
+        </div>
+        <div class="labor-box" id="w-labor" style="display:none;">
+          <div class="labor-header">
+            <div class="labor-title">Pay Breakdown</div>
+            <button class="labor-refresh" onclick="resetLabor('w'); calcW();">↺ Refresh</button>
+          </div>
+          <div style="font-size:11px;color:#60a5fa;font-style:italic;margin-bottom:12px;" id="w-labor-suggest"></div>
+
+          <div class="labor-input-row">
+            <label>Hourly wage $</label>
+            <input type="number" id="w-wage" value="20.00" min="10" max="60" step="0.50" oninput="markEdited('w-wage'); calcLabor_w()" />
+            <label>Hours / day</label>
+            <input type="number" id="w-hours" value="2" min="0.5" max="20" step="0.5" oninput="markEdited('w-hours'); calcLabor_w()" />
+          </div>
+
+          <div style="margin:14px 0 6px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:#94a3b8;">Cost breakdown</div>
+
+          <div class="labor-row" style="font-weight:600;color:#f8fafc;">
+            <span>Labor cost <span style="font-size:11px;font-weight:400;color:#64748b;" id="w-labor-calc-note"></span></span>
+            <span id="w-labor-gross"></span>
+          </div>
+          <div class="labor-row" style="padding-left:16px;">
+            <span style="color:#64748b;">Payroll burden (+20%)</span>
+            <span id="w-labor-burden"></span>
+          </div>
+          <div class="labor-row" style="font-weight:600;border-top:1px solid rgba(148,163,184,0.18);margin-top:4px;padding-top:10px;">
+            <span>Total labor cost</span>
+            <span id="w-labor-total" style="color:#f87171;"></span>
+          </div>
+          <div class="labor-row">
+            <span>Materials cost <span style="font-size:10px;color:#475569;">(editable)</span></span>
+            <input type="number" id="w-labor-matcost-input"
+              step="1" min="0"
+              style="width:100px;padding:5px 8px;border-radius:8px;border:1px solid rgba(96,165,250,0.4);background:rgba(2,6,23,0.8);color:#f87171;font-size:14px;font-weight:700;text-align:right;"
+              oninput="overrideMat('w')" />
+          </div>
+          <div class="labor-row" style="font-weight:600;">
+            <span>Total costs</span>
+            <span id="w-labor-allcosts" style="color:#f87171;"></span>
+          </div>
+          <div class="labor-row" style="font-weight:700;border-top:1px solid rgba(148,163,184,0.18);margin-top:4px;padding-top:10px;">
+            <span>Revenue (this job)</span>
+            <span id="w-labor-rev" style="color:#60a5fa;"></span>
+          </div>
+
+          <div class="labor-profit">
+            <div class="labor-profit-label">Your take home (after labor + materials)</div>
+            <div class="labor-profit-value" id="w-labor-profit"></div>
+            <div class="labor-profit-sub" id="w-labor-margin"></div>
+          </div>
+
+          <div style="margin-top:16px;padding:14px 16px;background:rgba(2,6,23,0.55);border:1px solid rgba(148,163,184,0.14);border-radius:16px;">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#93c5fd;margin-bottom:8px;">Adjust your target take home</div>
+            <div style="display:flex;align-items:center;gap:10px;">
+              <span style="font-size:13px;color:#94a3b8;">I want to keep $</span>
+              <input type="number" id="w-target" placeholder="e.g. 1200" min="0" step="10"
+                style="flex:1;padding:10px 12px;border-radius:12px;border:1px solid rgba(96,165,250,0.4);background:rgba(2,6,23,0.8);color:#f8fafc;font-size:15px;font-weight:700;"
+                oninput="calcFromTarget('w')" />
+              <span style="font-size:12px;color:#64748b;">this job</span>
+            </div>
+            <div style="font-size:11px;color:#60a5fa;margin-top:8px;font-style:italic;" id="w-target-note"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function fmt(n) {
+    return '$' + Math.round(n).toLocaleString();
+  }
+
+  function fmtMoneyPrecise(n) {
+    return '$' + Number(n).toFixed(2);
+  }
+
+  function switchTab(name, el) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('sec-' + name).classList.add('active');
+  }
+
+  function calcC() {
+    const sqft = parseFloat(document.getElementById('c-sqft').value) || 0;
+    const freq = parseFloat(document.getElementById('c-freq').value) || 0;
+    const typeAdj = parseFloat(document.getElementById('c-type').value) || 0;
+    const visitsMap = {'0.19':20,'0.15':16,'0.11':12,'0.075':8,'0.048':4,'0.027':2,'0.013':1};
+    const visits = visitsMap[document.getElementById('c-freq').value] || 4;
+
+    if (!sqft || !freq) {
+      document.getElementById('c-result').style.display='none';
+      document.getElementById('c-mat').style.display='none';
+      document.getElementById('c-warn').style.display='none';
+      return;
+    }
+
+    // Small account premium: adds up to +$0.07/sqft for tiny accounts, tapers to 0 at 10,000+ sqft
+    const sizePremium = Math.max(0, (10000 - sqft) / 10000 * 0.08);
+    const rate = Math.max(freq + typeAdj + sizePremium, 0.01);
+    const base = sqft * rate;
+    let breakdown = [['Base (' + sqft.toLocaleString() + ' sq ft × ' + fmtMoneyPrecise(rate) + ')', fmt(base)]];
+    let addons = 0;
+
+    if (document.getElementById('a-restroom').checked) { const n=parseInt(document.getElementById('a-restroom-n').value)||1; const a=15*n; addons+=a; breakdown.push([n+' full restroom(s)', fmt(a)]); }
+    if (document.getElementById('a-halfbath').checked)  { const n=parseInt(document.getElementById('a-halfbath-n').value)||1; const a=8*n; addons+=a; breakdown.push([n+' half bath(s)', fmt(a)]); }
+    if (document.getElementById('a-breakroom').checked) { const n=parseInt(document.getElementById('a-breakroom-n').value)||1; const a=20*n; addons+=a; breakdown.push([n+' break room(s)', fmt(a)]); }
+    if (document.getElementById('a-kitchen').checked)   { addons+=60; breakdown.push(['Commercial kitchen', '$60']); }
+    if (document.getElementById('a-wax').checked)       { const a=sqft*0.42; addons+=a; breakdown.push(['Floor strip & wax', fmt(a)]); }
+    if (document.getElementById('a-carpet').checked)    { const a=sqft*0.25; addons+=a; breakdown.push(['Carpet extraction', fmt(a)]); }
+
+    const total = base + addons;
+    const perVisit = total / visits;
+
+    document.getElementById('c-result').style.display = 'block';
+    document.getElementById('c-price').textContent = fmt(total) + ' / mo';
+    document.getElementById('c-sub').textContent = fmt(perVisit) + ' per visit • ' + visits + ' visits per month';
+    document.getElementById('c-breakdown').innerHTML = breakdown.map(r=>'<div class="brow"><span>'+r[0]+'</span><span>'+r[1]+'</span></div>').join('');
+    document.getElementById('c-warn').style.display = perVisit < 100 ? 'block' : 'none';
+
+    const restrooms = document.getElementById('a-restroom').checked ? parseInt(document.getElementById('a-restroom-n').value)||1 : 0;
+    const halfbaths = document.getElementById('a-halfbath').checked ? parseInt(document.getElementById('a-halfbath-n').value)||1 : 0;
+
+    // Chemicals: ~$0.00545/sqft/mo (calibrated: $60/mo for 11,000 sqft)
+    const chemBase = sqft * 0.00545;
+    const restroomChem = (restrooms + halfbaths) * 2.5 * visits;
+    const kitchenChem = document.getElementById('a-kitchen').checked ? 8 * visits : 0;
+
+    // Liners by bag size based on sqft
+    const largeBags  = sqft >= 5000 ? Math.ceil(sqft / 2500) * visits : 0;       // 55gal, $0.65ea
+    const medBags    = sqft >= 1500 ? Math.ceil(sqft / 1000) * visits : 0;        // 33gal, $0.35ea
+    const smallBags  = Math.ceil(sqft / 400) * visits;                             // 10gal, $0.15ea
+    const linerCost  = (largeBags * 0.65) + (medBags * 0.35) + (smallBags * 0.15);
+
+    const totalMat = linerCost + chemBase + restroomChem + kitchenChem;
+    const matPct = (totalMat / total) * 100;
+
+    const matRows = [
+      ['General cleaning chemicals', fmt(chemBase)],
+    ];
+    if (largeBags > 0)  matRows.push(['Large bags 55gal (~' + largeBags + '/mo × $0.65)', fmt(largeBags * 0.65)]);
+    if (medBags > 0)    matRows.push(['Medium bags 33gal (~' + medBags + '/mo × $0.35)', fmt(medBags * 0.35)]);
+    if (smallBags > 0)  matRows.push(['Small bags 10gal (~' + smallBags + '/mo × $0.15)', fmt(smallBags * 0.15)]);
+    if (restrooms + halfbaths > 0) matRows.push(['Restroom chemicals (' + (restrooms+halfbaths) + ' rooms)', fmt(restroomChem)]);
+    if (kitchenChem > 0) matRows.push(['Kitchen chemicals', fmt(kitchenChem)]);
+
+    document.getElementById('c-mat').style.display = 'block';
+    document.getElementById('c-mat-rows').innerHTML = matRows.map(r=>'<div class="mat-row"><span>'+r[0]+'</span><span>'+r[1]+'</span></div>').join('');
+    document.getElementById('c-mat-total').textContent = fmt(totalMat) + ' / mo';
+    const prodRate = 2641 + Math.max(sqft - 3750, 0) * 0.0913; const sugHrsC = Math.max(Math.round((sqft/prodRate)*10)/10, 0.5); showLabor('c', total, visits, totalMat, sugHrsC);
+
+    const rec = document.getElementById('c-rec');
+    if (matPct <= 4) {
+      rec.className = 'rec-box rec-cover';
+      rec.innerHTML = '<div class="rec-label">Cover it</div>Materials are ' + matPct.toFixed(1) + '% of your monthly rate. This is easy to absorb into your price.';
+    } else if (matPct <= 8) {
+      rec.className = 'rec-box rec-add';
+      rec.innerHTML = '<div class="rec-label">Bake it into the quote</div>Materials are ' + matPct.toFixed(1) + '% of your monthly rate. Raise the contract price slightly instead of billing separately.';
+    } else {
+      rec.className = 'rec-box rec-add';
+      rec.innerHTML = '<div class="rec-label">Charge on top</div>Materials are ' + matPct.toFixed(1) + '% of your monthly rate. This is big enough to justify a separate line item or higher contract rate.';
+    }
+  }
+
+  function calcR() {
+    const base = parseFloat(document.getElementById('r-size').value) || 0;
+    const mult = parseFloat(document.getElementById('r-freq').value) || 0;
+    if (!base || !mult) {
+      document.getElementById('r-result').style.display='none';
+      document.getElementById('r-mat').style.display='none';
+      document.getElementById('r-warn').style.display='none';
+      return;
+    }
+
+    let price = base * mult;
+    let breakdown = [['Base rate × frequency multiplier', fmt(price)]];
+    let addons = 0;
+
+    if (document.getElementById('r-extrabr').checked) { const n=parseInt(document.getElementById('r-extrabr-n').value)||1; const a=35*n; addons+=a; breakdown.push([n+' extra bedroom(s)', fmt(a)]); }
+    if (document.getElementById('r-fullba').checked)  { const n=parseInt(document.getElementById('r-fullba-n').value)||1; const a=40*n; addons+=a; breakdown.push([n+' extra full bath(s)', fmt(a)]); }
+    if (document.getElementById('r-halfba').checked)   { addons+=21; breakdown.push(['Half bath', '$21']); }
+    if (document.getElementById('r-basement').checked) { addons+=60; breakdown.push(['Finished basement', '$60']); }
+    if (document.getElementById('r-fridge').checked)   { addons+=50; breakdown.push(['Inside refrigerator', '$50']); }
+    if (document.getElementById('r-oven').checked)     { addons+=47; breakdown.push(['Inside oven', '$47']); }
+    if (document.getElementById('r-cabinets').checked) { addons+=75; breakdown.push(['Inside cabinets', '$75']); }
+    if (document.getElementById('r-garage').checked)   { addons+=40; breakdown.push(['Garage sweep', '$40']); }
+    if (document.getElementById('r-pets').checked)     { addons+=27; breakdown.push(['Pets surcharge', '$27']); }
+
+    let total = price + addons;
+    if (document.getElementById('r-dirty').checked) {
+      const s=total*0.50;
+      breakdown.push(['Heavily soiled (+50%)', fmt(s)]);
+      total+=s;
+    }
+
+    document.getElementById('r-result').style.display = 'block';
+    document.getElementById('r-price').textContent = fmt(total);
+    document.getElementById('r-breakdown').innerHTML = breakdown.map(r=>'<div class="brow"><span>'+r[0]+'</span><span>'+r[1]+'</span></div>').join('');
+    document.getElementById('r-warn').style.display = total < 100 ? 'block' : 'none';
+
+    // Residential: small kitchen bags + 1 medium bag, light chemicals
+    const rSmallBags = 3; const rMedBags = 1;
+    const rLinerCost = (rSmallBags * 0.15) + (rMedBags * 0.35);
+    const chemCost = 1.20;
+    const totalMat = rLinerCost + chemCost;
+    const matPct = (totalMat / total) * 100;
+
+    document.getElementById('r-mat').style.display = 'block';
+    document.getElementById('r-mat-rows').innerHTML = [
+      ['Small bags 10gal (~' + rSmallBags + '/visit × $0.15)', fmt(rSmallBags * 0.15)],
+      ['Medium bag 33gal (~' + rMedBags + '/visit × $0.35)', fmt(rMedBags * 0.35)],
+      ['Cleaning chemicals', fmt(chemCost)],
+    ].map(r=>'<div class="mat-row"><span>'+r[0]+'</span><span>'+r[1]+'</span></div>').join('');
+    document.getElementById('r-mat-total').textContent = fmt(totalMat) + ' / visit';
+    const rBase=parseFloat(document.getElementById('r-size').value)||130; const sugHrsR=rBase<=130?1.5:rBase<=165?2.0:rBase<=207?2.5:rBase<=260?3.0:3.5; showLabor('r', total, 1, totalMat, sugHrsR);
+
+    const rec = document.getElementById('r-rec');
+    if (matPct <= 4) {
+      rec.className = 'rec-box rec-cover';
+      rec.innerHTML = '<div class="rec-label">Cover it</div>Materials are ' + matPct.toFixed(1) + '% of your visit price. Not worth itemizing.';
+    } else if (matPct <= 8) {
+      rec.className = 'rec-box rec-add';
+      rec.innerHTML = '<div class="rec-label">Bake it into your rate</div>Materials are ' + matPct.toFixed(1) + '% of your visit price. Raise the visit price a little.';
+    } else {
+      rec.className = 'rec-box rec-add';
+      rec.innerHTML = '<div class="rec-label">Charge more</div>Materials are ' + matPct.toFixed(1) + '% of your visit price. That is large enough to affect margin.';
+    }
+  }
+
+  function calcOT() {
+    const type      = document.getElementById('ot-type').value;
+    const sqft      = parseFloat(document.getElementById('ot-sqft').value) || 0;
+    const condition = parseFloat(document.getElementById('ot-condition').value) || 1;
+    const rate      = parseFloat(document.getElementById('ot-rate').value) || 0;
+    const baths     = parseInt(document.getElementById('ot-baths').value) || 0;
+
+    if (!type || !sqft || !rate) {
+      document.getElementById('ot-result').style.display = 'none';
+      document.getElementById('ot-warn').style.display = 'none';
+      document.getElementById('ot-stats').style.display = 'none';
+      return;
+    }
+
+    // ── Cleaning base ──
+    const base       = sqft * rate;
+    const conditioned = base * condition;
+    let cleanAddons  = 0;
+    let breakdown    = [
+      ['Base (' + sqft.toLocaleString() + ' sq ft × ' + fmtMoneyPrecise(rate) + ')', fmt(base)],
+    ];
+    if (condition !== 1) breakdown.push(['Condition adjustment (×' + condition + ')', fmt(conditioned - base)]);
+
+    const bathRate  = type === 'office' ? 18 : 25;
+    if (baths > 0) { const a = baths * bathRate; cleanAddons += a; breakdown.push([baths + ' restroom/bathroom(s) × $' + bathRate, fmt(a)]); }
+    if (document.getElementById('ot-inside-fridge').checked)  { cleanAddons += 50;  breakdown.push(['Inside refrigerator', '$50']); }
+    if (document.getElementById('ot-inside-oven').checked)    { cleanAddons += 47;  breakdown.push(['Inside oven', '$47']); }
+    if (document.getElementById('ot-cabinets').checked)       { cleanAddons += 75;  breakdown.push(['Inside cabinets', '$75']); }
+    if (document.getElementById('ot-baseboards').checked)     { cleanAddons += 65;  breakdown.push(['Detailed baseboards', '$65']); }
+    if (document.getElementById('ot-floor-detail').checked)   { cleanAddons += 120; breakdown.push(['Floor detail / scrub', '$120']); }
+    if (document.getElementById('ot-carpet').checked)         { const a = sqft * 0.25; cleanAddons += a; breakdown.push(['Carpet extraction (' + sqft.toLocaleString() + ' sq ft × $0.25)', fmt(a)]); }
+
+    const cleanTotal = conditioned + cleanAddons;
+
+    // ── Windows ──
+    const panes    = parseFloat(document.getElementById('ot-panes').value) || 0;
+    const paneRate = parseFloat(document.getElementById('ot-pane-rate').value) || 0;
+    const sides    = parseFloat(document.getElementById('ot-sides').value) || 1;
+    let winTotal   = 0;
+
+    if (panes > 0 && paneRate > 0) {
+      winTotal = panes * paneRate * sides;
+      breakdown.push(['Windows: ' + panes + ' panes × $' + paneRate + (sides < 1 ? ' × ' + (sides*100).toFixed(0) + '% sides' : ''), fmt(winTotal)]);
+
+      let winAddons = 0;
+      if (document.getElementById('ot-w-2fl').checked)   { const n=parseInt(document.getElementById('ot-w-2fl-n').value)||1; const a=4*n; winAddons+=a; breakdown.push([n+' 2nd floor windows', fmt(a)]); }
+      if (document.getElementById('ot-w-3fl').checked)   { const n=parseInt(document.getElementById('ot-w-3fl-n').value)||1; const a=7*n; winAddons+=a; breakdown.push([n+' 3rd floor+ windows', fmt(a)]); }
+      if (document.getElementById('ot-w-screens').checked){ const n=parseInt(document.getElementById('ot-w-screens-n').value)||1; const a=4*n; winAddons+=a; breakdown.push([n+' screens', fmt(a)]); }
+      if (document.getElementById('ot-w-tracks').checked) { const n=parseInt(document.getElementById('ot-w-tracks-n').value)||1; const a=6*n; winAddons+=a; breakdown.push([n+' tracks/sills', fmt(a)]); }
+      winTotal += winAddons;
+      if (document.getElementById('ot-w-hardwater').checked)    { const s=winTotal*0.75; breakdown.push(['Window hard water (+75%)', fmt(s)]); winTotal+=s; }
+      if (document.getElementById('ot-w-postconstruct').checked) { const s=winTotal;     breakdown.push(['Window post-construction (+100%)', fmt(s)]); winTotal+=s; }
+    }
+
+    const total          = cleanTotal + winTotal;
+    const materialEstimate = Math.max(sqft * 0.008, 6);
+    const effectiveRate  = total / sqft;
+
+    document.getElementById('ot-result').style.display = 'block';
+    document.getElementById('ot-price').textContent    = fmt(total);
+    document.getElementById('ot-sub').textContent      = (type === 'office' ? 'Commercial' : 'Residential') + ' one-time • ' + sqft.toLocaleString() + ' sq ft' + (winTotal > 0 ? ' + windows' : '');
+    document.getElementById('ot-breakdown').innerHTML  = breakdown.map(r=>'<div class="brow"><span>'+r[0]+'</span><span>'+r[1]+'</span></div>').join('');
+    document.getElementById('ot-warn').style.display   = total < 150 ? 'block' : 'none';
+    document.getElementById('ot-stats').style.display  = 'grid';
+    document.getElementById('ot-materials').textContent = fmt(materialEstimate);
+    document.getElementById('ot-eff-rate').textContent  = fmtMoneyPrecise(effectiveRate) + '/sqft';
+    document.getElementById('ot-clean-sub').textContent = fmt(cleanTotal);
+    document.getElementById('ot-win-sub').textContent   = winTotal > 0 ? fmt(winTotal) : '—';
+    const otSqft2=parseFloat(document.getElementById('ot-sqft').value)||0; const sugHrsOT=Math.max(Math.round((otSqft2/1800)*10)/10,0.5); showLabor('ot', total, 1, materialEstimate, sugHrsOT);
+  }
+
+  function toggleW() {
+    const t = document.getElementById('w-type').value;
+    document.getElementById('w-res').style.display = t==='res' ? 'block' : 'none';
+    document.getElementById('w-com').style.display = t==='com' ? 'block' : 'none';
+    document.getElementById('w-result').style.display = 'none';
+  }
+
+  function calcW() {
+    const panes = parseFloat(document.getElementById('w-panes').value) || 0;
+    const rate  = parseFloat(document.getElementById('w-panerate').value) || 0;
+    const sides = parseFloat(document.getElementById('w-sides').value) || 1;
+    if (!panes) { document.getElementById('w-result').style.display='none'; return; }
+
+    let base = panes * rate * sides;
+    let breakdown = [['Panes × rate × sides', fmt(base)]];
+    let addons = 0;
+
+    if (document.getElementById('w-2fl').checked)        { const n=parseInt(document.getElementById('w-2fl-n').value)||1; const a=4*n; addons+=a; breakdown.push([n+' 2nd floor windows', fmt(a)]); }
+    if (document.getElementById('w-3fl').checked)        { const n=parseInt(document.getElementById('w-3fl-n').value)||1; const a=7*n; addons+=a; breakdown.push([n+' 3rd floor+ windows', fmt(a)]); }
+    if (document.getElementById('w-screens').checked)    { const n=parseInt(document.getElementById('w-screens-n').value)||1; const a=4*n; addons+=a; breakdown.push([n+' screens', fmt(a)]); }
+    if (document.getElementById('w-tracks').checked)     { const n=parseInt(document.getElementById('w-tracks-n').value)||1; const a=6*n; addons+=a; breakdown.push([n+' tracks/sills', fmt(a)]); }
+    if (document.getElementById('w-skylights').checked)  { const n=parseInt(document.getElementById('w-skylights-n').value)||1; const a=29*n; addons+=a; breakdown.push([n+' skylight(s)', fmt(a)]); }
+    if (document.getElementById('w-doors').checked)      { const n=parseInt(document.getElementById('w-doors-n').value)||1; const a=17*n; addons+=a; breakdown.push([n+' door(s)', fmt(a)]); }
+
+    let total = base + addons;
+    if (document.getElementById('w-hardwater').checked)    { const s=total*0.75; breakdown.push(['Hard water (+75%)', fmt(s)]); total+=s; }
+    if (document.getElementById('w-postconstruct').checked){ const s=total; breakdown.push(['Post-construction (+100%)', fmt(s)]); total+=s; }
+
+    document.getElementById('w-result').style.display = 'block';
+    document.getElementById('w-price').textContent = fmt(total);
+    document.getElementById('w-breakdown').innerHTML = breakdown.map(r=>'<div class="brow"><span>'+r[0]+'</span><span>'+r[1]+'</span></div>').join('');
+    const wPanes=parseFloat(document.getElementById('w-panes').value)||0; const sugHrsW=Math.max(Math.round(wPanes/25*10)/10,0.5); showLabor('w', total, 1, Math.max(wPanes*0.05,2), sugHrsW);
+  }
+
+  function calcWC() {
+    const panes  = parseFloat(document.getElementById('wc-panes').value) || 0;
+    const rate   = parseFloat(document.getElementById('wc-panerate').value) || 0;
+    const floors = parseFloat(document.getElementById('wc-floors').value) || 0;
+    if (!panes) { document.getElementById('w-result').style.display='none'; return; }
+
+    let base = panes * rate * (1 + floors);
+    let breakdown = [['Panes × rate' + (floors>0?' + floor adj':''), fmt(base)]];
+    let total = base;
+
+    if (document.getElementById('wc-hardwater').checked)    { const s=total*0.60; breakdown.push(['Hard water (+60%)', fmt(s)]); total+=s; }
+    if (document.getElementById('wc-postconstruct').checked){ const s=total; breakdown.push(['Post-construction (+100%)', fmt(s)]); total+=s; }
+    if (document.getElementById('wc-interior').checked)     { const s=total*0.38; breakdown.push(['Interior side (+38%)', fmt(s)]); total+=s; }
+
+    document.getElementById('w-result').style.display = 'block';
+    document.getElementById('w-price').textContent = fmt(total);
+    document.getElementById('w-breakdown').innerHTML = breakdown.map(r=>'<div class="brow"><span>'+r[0]+'</span><span>'+r[1]+'</span></div>').join('');
+    const wcPanes=parseFloat(document.getElementById('wc-panes').value)||0; const sugHrsWC=Math.max(Math.round(wcPanes/20*10)/10,0.5); showLabor('w', total, 1, Math.max(wcPanes*0.05,2), sugHrsWC);
+  }
+
+  // ── LABOR HELPERS ──────────────────────────────────────────
+  // visitMult: for commercial = visits/month, for others = 1
+  // ── LABOR ENGINE ─────────────────────────────────────────────────────
+  // Phoenix AZ market: ~$17.50/hr average janitorial wage
+  // 20 working days/month baseline for commercial
+  const DAYS_PER_MONTH = 20;
+
+  function markEdited(id) {
+    const el = document.getElementById(id);
+    if (el) el.dataset.userEdited = '1';
+  }
+
+  function showLabor(prefix, revenue, visitMult, matCost, suggestHours) {
+    const el = document.getElementById(prefix + '-labor');
+    el.style.display = 'block';
+    el.dataset.visitMult = visitMult || 1;
+    el.dataset.revenue   = revenue;
+    el.dataset.matCost   = matCost || 0;
+
+    const wageEl  = document.getElementById(prefix + '-wage');
+    const hoursEl = document.getElementById(prefix + '-hours');
+    if (!wageEl.dataset.userEdited)  wageEl.value  = '20.00';
+    if (!hoursEl.dataset.userEdited && suggestHours !== undefined)
+      hoursEl.value = suggestHours.toFixed(1);
+
+    // Suggestion note
+    const noteEl = document.getElementById(prefix + '-labor-suggest');
+    if (noteEl && suggestHours !== undefined)
+      noteEl.textContent = 'Suggested ' + suggestHours.toFixed(1) + ' hrs/day based on job size — adjust as needed';
+
+    calcLabor_inner(prefix, revenue, visitMult || 1, matCost || 0);
+  }
+
+  function calcLabor_inner(prefix, revenue, visitMult, matCost) {
+    if (visitMult === undefined) visitMult = parseFloat(document.getElementById(prefix + '-labor').dataset.visitMult) || 1;
+    if (matCost   === undefined) {
+      // Use overridden value if user has edited it, otherwise fall back to dataset
+      const matInput = document.getElementById(prefix + '-labor-matcost-input');
+      matCost = matInput && matInput.dataset.userOverride ? parseFloat(matInput.value) || 0 : parseFloat(document.getElementById(prefix + '-labor').dataset.matCost) || 0;
+    }
+
+    const wage      = parseFloat(document.getElementById(prefix + '-wage').value)  || 20.00;
+    const hoursDay  = parseFloat(document.getElementById(prefix + '-hours').value) || 2;
+    // For commercial visitMult = # visits/mo; for others = 1 (single job)
+    const totalHours = hoursDay * visitMult;
+    const gross      = wage * totalHours;
+    const burden     = gross * 0.20;
+    const laborTotal = gross + burden;
+    const allCosts   = laborTotal + matCost;
+    const profit     = revenue - allCosts;
+    const margin     = revenue > 0 ? (profit / revenue * 100) : 0;
+
+    // Labor calc note (e.g. "$17.50 × 2 hrs × 20 days")
+    const noteEl = document.getElementById(prefix + '-labor-calc-note');
+    if (noteEl) {
+      if (visitMult > 1)
+        noteEl.textContent = '($' + wage.toFixed(2) + '/hr × ' + hoursDay + ' hrs × ' + visitMult + ' visits)';
+      else
+        noteEl.textContent = '($' + wage.toFixed(2) + '/hr × ' + hoursDay + ' hrs)';
+    }
+
+    const suf = visitMult > 1 ? ' / mo' : '';
+    document.getElementById(prefix + '-labor-gross').textContent    = fmt(gross)      + suf;
+    document.getElementById(prefix + '-labor-burden').textContent   = fmt(burden)     + suf;
+    document.getElementById(prefix + '-labor-total').textContent    = fmt(laborTotal) + suf;
+    const matInputEl = document.getElementById(prefix + '-labor-matcost-input');
+    if (matInputEl && !matInputEl.dataset.userOverride) matInputEl.value = Math.round(matCost);
+    document.getElementById(prefix + '-labor-allcosts').textContent = fmt(allCosts)   + suf;
+    document.getElementById(prefix + '-labor-rev').textContent      = fmt(revenue)    + suf;
+
+    // Gross cut = revenue - labor (before materials)
+    const grossCut   = revenue - laborTotal;
+    const netCut     = revenue - allCosts;   // after materials too
+    const matFromCut = matCost;
+
+    document.getElementById(prefix + '-labor-profit').textContent = fmt(netCut);
+
+    const marginEl = document.getElementById(prefix + '-labor-margin');
+    if (netCut < 0) {
+      marginEl.innerHTML = 'Losing money — raise your rate or cut hours';
+    } else {
+      // Show the layered breakdown: gross cut, then materials come out of it
+      marginEl.innerHTML =
+        'Before materials: <strong>' + fmt(grossCut) + suf + '</strong>' +
+        ' &nbsp;−&nbsp; materials (' + fmt(matFromCut) + suf + ')' +
+        ' &nbsp;=&nbsp; <strong>' + fmt(netCut) + '</strong> your real take' +
+        ' &nbsp;(' + margin.toFixed(0) + '% margin)';
+    }
+
+    // Clear target note if recalculating from inputs
+    const tNote = document.getElementById(prefix + '-target-note');
+    if (tNote && !tNote.dataset.fromTarget) tNote.textContent = '';
+  }
+
+  // Back-calculate from target take-home
+  function calcFromTarget(prefix) {
+    const target    = parseFloat(document.getElementById(prefix + '-target').value) || 0;
+    const revenue   = parseFloat(document.getElementById(prefix + '-labor').dataset.revenue)   || 0;
+    const visitMult = parseFloat(document.getElementById(prefix + '-labor').dataset.visitMult) || 1;
+    const matCost   = parseFloat(document.getElementById(prefix + '-labor').dataset.matCost)   || 0;
+    const tNote     = document.getElementById(prefix + '-target-note');
+
+    if (!target || !revenue) { if (tNote) tNote.textContent = ''; return; }
+
+    // revenue - matCost - laborTotal = target
+    // laborTotal = revenue - matCost - target
+    const maxLabor = revenue - matCost - target;
+    if (maxLabor <= 0) {
+      if (tNote) tNote.textContent = 'Target is too high — not achievable at this revenue.';
+      return;
+    }
+
+    // laborTotal = gross * 1.20, gross = wage * hours * visits
+    // We hold wage fixed, solve for hours:
+    const wage = parseFloat(document.getElementById(prefix + '-wage').value) || 20.00;
+    const gross = maxLabor / 1.20;
+    const totalHours = gross / wage;
+    const hoursPerDay = totalHours / visitMult;
+
+    const hoursEl = document.getElementById(prefix + '-hours');
+    hoursEl.value = Math.max(hoursPerDay, 0.5).toFixed(1);
+    hoursEl.dataset.userEdited = '1';
+
+    if (tNote) {
+      tNote.dataset.fromTarget = '1';
+      tNote.textContent = 'To keep ' + fmt(target) + ': pay worker ' + hoursPerDay.toFixed(1) + ' hrs/day at $' + wage.toFixed(2) + '/hr';
+      setTimeout(() => { delete tNote.dataset.fromTarget; }, 100);
+    }
+    calcLabor_inner(prefix, revenue, visitMult, matCost);
+  }
+
+  function calcLabor_c()  {
+    const r=parseFloat(document.getElementById('c-labor').dataset.revenue)||0;
+    const vm=parseFloat(document.getElementById('c-labor').dataset.visitMult)||1;
+    const m=parseFloat(document.getElementById('c-labor').dataset.matCost)||0;
+    if(r>0) calcLabor_inner('c',r,vm,m);
+  }
+  function calcLabor_r()  {
+    const r=parseFloat(document.getElementById('r-labor').dataset.revenue)||0;
+    const m=parseFloat(document.getElementById('r-labor').dataset.matCost)||0;
+    if(r>0) calcLabor_inner('r',r,1,m);
+  }
+  function calcLabor_ot() {
+    const r=parseFloat(document.getElementById('ot-labor').dataset.revenue)||0;
+    const m=parseFloat(document.getElementById('ot-labor').dataset.matCost)||0;
+    if(r>0) calcLabor_inner('ot',r,1,m);
+  }
+  function calcLabor_w()  {
+    const r=parseFloat(document.getElementById('w-labor').dataset.revenue)||0;
+    const m=parseFloat(document.getElementById('w-labor').dataset.matCost)||0;
+    if(r>0) calcLabor_inner('w',r,1,m);
+  }
+
+
+  function overrideMat(prefix) {
+    const matInput = document.getElementById(prefix + '-labor-matcost-input');
+    matInput.dataset.userOverride = '1';
+    const revenue   = parseFloat(document.getElementById(prefix + '-labor').dataset.revenue)   || 0;
+    const visitMult = parseFloat(document.getElementById(prefix + '-labor').dataset.visitMult) || 1;
+    const matCost   = parseFloat(matInput.value) || 0;
+    // Update dataset so target calc also picks it up
+    document.getElementById(prefix + '-labor').dataset.matCost = matCost;
+    calcLabor_inner(prefix, revenue, visitMult, matCost);
+  }
+
+  // Reset labor fields so recalc picks up fresh sq footage / job size
+  function resetLabor(prefix) {
+    const wageEl  = document.getElementById(prefix + '-wage');
+    const hoursEl = document.getElementById(prefix + '-hours');
+    const targetEl = document.getElementById(prefix + '-target');
+    const matInput = document.getElementById(prefix + '-labor-matcost-input');
+    delete wageEl.dataset.userEdited;
+    delete hoursEl.dataset.userEdited;
+    if (matInput) { delete matInput.dataset.userOverride; matInput.value = ''; }
+    if (targetEl) targetEl.value = '';
+    const tNote = document.getElementById(prefix + '-target-note');
+    if (tNote) tNote.textContent = '';
+  }
+
+
+</script>
