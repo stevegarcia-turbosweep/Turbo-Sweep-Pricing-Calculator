@@ -612,6 +612,9 @@ function toggleLang(){
   applyText(qs('.scroll-cue-label'),'scrollLabel',esData.scrollLabel,false);
 }
 
+  window.addEventListener('load', function(){ window.scrollTo(0, 0); });
+  history.scrollRestoration = 'manual';
+
 </script>
 </body>
 </html>
